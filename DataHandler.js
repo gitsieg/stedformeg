@@ -82,8 +82,8 @@ class DataHandler {
                             for (let k = 0; k < coords[j].length; k++)
                                 stoy.push([
                                     [
-                                        Math.round(coords[j][k][0] * 1000) * 0.001,
-                                        Math.round(coords[j][k][1] * 1000) * 0.001
+                                        coords[j][k][0],
+                                        coords[j][k][1]
                                     ],
                                     parseInt(interval)
                                 ]);
@@ -109,13 +109,11 @@ class DataHandler {
                     }
                 });
 
-                this.createFile("stoy.json", JSON.stringify(stoy));
-
                 console.log("Done!");
                 console.log(stoy.length);
                 console.log(JSON.stringify(stoy[0]));
 
-                // asdfa
+
             }
 
         }.bind(this);

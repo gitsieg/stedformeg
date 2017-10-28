@@ -3,9 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Sted for meg</title>
+    <script src="DataHandler.js"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <script src="/dist/build.js"></script>
+    <h1>Sted4Meg</h1>
+
+
+    <input type="button" onclick="getContent()" value="Clicky!">
+    <div id="content" onclick="getContent()"></div>
+    <script>
+
+        let handler = new DataHandler();
+        let content = document.getElementById("content");
+
+        function getContent() {
+            let bh = handler.categories["barnehage"];
+            let string = "<table>";
+            for (let i = 0; i < bh.length; i++) {
+                string += "<tr><td>"+bh[i][0]+"</td><td>"+bh[i][1]+"</td></tr>"
+            }
+            string += "</table>";
+            content.innerHTML = string;
+        }
+        function printContent() {
+            content.innerHTML = JSON.stringify(handler.categories["tursti"]);
+        }
+
+    </script>
+
   </body>
 </html>
