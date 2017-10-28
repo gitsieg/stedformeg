@@ -6,18 +6,21 @@
     <script src="DataHandler.js"></script>
     <script src="distance/PointOfInterest.js"></script>
     <script src="distance/pointTools.js"></script>
+    <style>
+      html, body, #app {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
     <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBOPgoEQFI73MPcHhXakXpafjbNsbDv1c&libraries=visualization">
     </script>
     	
-    <h1>Sted4Meg</h1>
+    <div id="app"></div>
 
-
-    <input type="button" onclick="getContent()" value="Clicky!">
-    <div id="content" onclick="getContent()"></div>
     <script>
 
         let handler = new DataHandler();
