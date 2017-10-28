@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sted for meg - Tjenesten</title>
+    <script src="../DataHandler.js"></script>
 </head>
 <body>
 <header>Sted for meg</header>
@@ -14,42 +15,31 @@
 
 </nav>
 <main>
+    button
     <!--Map-->
     <script type="text/javascript" src="PointOfInterest.js"></script>
-    <script type="text/javascript" src="DesireIndex.js"></script>
+    <!--<script type="text/javascript" src="DesireIndex.js"></script>-->
+    <script type="text/javascript" src="../DataHandler.js"></script>
+    <script type="text/javascript" src="pointTools.js"></script>
     <script type="text/javascript">
 
+        // Coordinates to the point to be assessed/evaluated
         let startLat = 58.943810;
         let startLon = 5.743316;
 
+        console.log(startLat + "         "  + startLon);
+
+        // Instance of a point of interest
         let pointToAssess = new PointOfInterest(startLat, startLon, Number.MAX_SAFE_INTEGER);
+        let datahandler = new DataHandler();
+        let categories = datahandler.categories;
 
-        let arr = [
-            [58.964696, 5.707375],
-            [58.982665, 5.707375],
-            [58.940129, 5.648528],
-            [58.972132, 5.716442],
-            [58.944487, 5.745595],
-            [58.966325, 5.604738],
-            [58.957328, 5.694603]
-        ];
+        // Process coordinate data
+        let barnehagePoints = processCoordinates(categories["barnehage"], pointToAssess);
+        let turstiPoints = processCoordinates(categories["tursti"], pointToAssess);
 
-        console.log(arr.length);
-
-
-        let points = [];
-        console.log("points length " + points.length);
-        for (let i = 0; i < arr.length; i++) {
-            let poi = new PointOfInterest(arr[i][0], arr[i][1], PointOfInterest.measure(arr[i][0], arr[i][1], startLat, startLon));
-            points.push(poi);
-        }
-
-        for (let i = 0; i < points.length; i++) {
-            console.log(points[i]);
-        }
-
-        let thePoint = setPointScore(points, pointToAssess);
-        console.log("Evaluated point: " + JSON.stringify(thePoint));
+        console.log(barnehagePoints);
+        console.log(turstiPoints);
 
     </script>
 </main>
