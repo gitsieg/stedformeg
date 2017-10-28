@@ -34,6 +34,8 @@
         let datahandler = new DataHandler();
         let categories = datahandler.categories;
 
+        console.log(categories);
+
         // Process coordinate data
         let barnehagePoints = processCoordinates(categories["barnehage"], pointToAssess);
         let turstiPoints = processCoordinates(categories["tursti"], pointToAssess);
