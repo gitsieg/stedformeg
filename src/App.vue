@@ -1,30 +1,18 @@
 <template>
   <div id="app">
-   <div>
-    I midten:
-    {{this.center}}
-  </div>
+    <h1 class="title">Sted4Meg</h1>
+    <gmap-map
+    id="map"
+    ref="map"
+    :center="center" 
+    v-on:center_changed="updateCenter"
+    v-on:bounds_changed="updateBounds"
+    v-on:dragend="drawHeatMap"
+    v-on:tilesloaded="drawHeatMap"
+    :zoom="10"
+    >
 
-  <div>
-    The BOUNDNSDS:
-    {{this.bounds}}
-  </div>
-
-  <button v-on:click="drawHeatMap"> klikk  </button>
-
-  <gmap-map
-  id="map"
-  ref="map"
-  :center="center" 
-  v-on:center_changed="updateCenter"
-  v-on:bounds_changed="updateBounds"
-  v-on:dragend="drawHeatMap"
-  v-on:tilesloaded="drawHeatMap"
-  :zoom="10"
-  style="width: 500px; height: 300px"
-  >
-
-</gmap-map>
+  </gmap-map>
 
 </div>
 </template>
@@ -60,7 +48,6 @@ export default {
     this.fetchTurstier();
   },
   methods: {
-
     fetchBarnehager: function () {
       axios.get('http://hotell.difi.no/api/json/stavanger/barnehager?')
       .then(function (response) {
@@ -118,22 +105,9 @@ export default {
       let latLng = new google.maps.LatLng(result.coordinates.lat, result.coordinates.lng);
       heatMapData.push({location: latLng, weight: result.weight});
     });
-/*
-    let map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
-        center: {lat: 60.5, lng: 9},
-        mapTypeId: 'terrain'
-      });*/
-
-  /*  if (this.heatMap !== null){
-      this.heatMap.data.b = heatMapData;
-    }*/
-
-    // minzoom = 8
 
     if (this.heatMap !== null) this.heatMap = this.heatMap.setMap(null);
     let zoomValue = this.$refs.map.$mapObject.zoom;
-
     this.heatMap = new google.maps.visualization.HeatmapLayer({
       data: heatMapData,
       dissipating: false,
@@ -155,50 +129,29 @@ export default {
     });
    });
     return heatMapPoints;
-
   },
-  generateHeatMapGrid: function () {
-    console.log("geneerate heatmap");
-    let heatMapGridCoordinates = [];
-    let zoomValue = this.$refs.map.$mapObject.zoom;
-    let gridRows = Math.round(80 / (zoomValue*0.4));
-    let gridCols = Math.round(80*1.78  / (zoomValue*0.4));
-
-    console.log("gridrows:" + gridRows);
-    console.log("gridcols:" + gridCols);
-
-    let gridHeight = this.bounds.south - this.bounds.north;
-    let gridWidth = this.bounds.west - this.bounds.east;
-
-    let gridVerticalSpace = gridHeight / gridRows;
-    let gridHorizontalSpace = gridWidth / gridCols;
-
-
-    let latCoordinate = this.bounds.north + (gridVerticalSpace/2);
-    let lngCoordinate = this.bounds.east + (gridHorizontalSpace/2);
-
-    for (let latIndex = 0; latIndex < gridRows; latIndex++) {
-     for (let lngIndex = 0; lngIndex < gridCols; lngIndex++) {
-      heatMapGridCoordinates.push({
-        coordinates: {
-          lat: latCoordinate,
-          lng: lngCoordinate
-        },
-        weight: (Math.random())*1.5
-      });
-      lngCoordinate += gridHorizontalSpace;
-    }
-    latCoordinate += gridVerticalSpace;
-    lngCoordinate = this.bounds.east + (gridHorizontalSpace/2);
-  }
-  return heatMapGridCoordinates;
-
-},
 }
 }
 
 </script>
 
-<style lang="scss">
-
+<style>
+.title{
+  font-family: Verdana, Arial, sans-serif;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  top: 0;
+  padding: 0 20px;
+  line-height: 50px;
+  background-color: #226699;
+  color: #FFF;
+  margin: 0;
+  height: 50px;
+}
+#map{
+  width: 100%;
+  margin-top: 50px;
+  height: calc(100% - 50px);
+}
 </style>
