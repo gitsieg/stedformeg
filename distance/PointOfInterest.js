@@ -1,6 +1,5 @@
 /**
  * Class representing points of interests.
-
  */
 class PointOfInterest {
     constructor(lat, lon, distance) {
@@ -10,41 +9,26 @@ class PointOfInterest {
         this.score = 0;
     }
 
-    get getLat() {
-        return this.lat;
-    }
-
-    get getLon() {
-        return this.lon;
-    }
-
-    get getDistance() {
-        return this.distance;
-    }
-
-    set setScore(score) {
-        this.score = score;
-    }
-
     /**
-     *  * Provides static method measuring distance between a pair of two lat-lon coordinates.
+     * Provides static method measuring distance between a pair of two lat-lon coordinates.
      * @param lat1
      * @param lon1
      * @param lat2
      * @param lon2
      * @returns {number} - meters
      */
-    static measure(lat1, lon1, lat2, lon2) {  // generally used geo measurement function
-        let factor = 1000;
-        var R = 6378.137; // Radius of earth in KM
-        var dLat = (factor * lat2) * Math.PI / 180 - (factor * lat2) * Math.PI / 180;
-        var dLon = (factor * lon2) * Math.PI / 180 - (factor * lon1) * Math.PI / 180;
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c;
-        return d; // meters
+
+    static measure(lat1,lon1,lat2,lon2) {
+        let R = 6371; // Radius of the earth in km
+        let dLat = (Math.PI/180) * (lat2-lat1);  // deg2rad below
+        let dLon = (Math.PI/180) * (lon2-lon1);
+        let a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos((Math.PI/180) * lat1) * Math.cos((Math.PI/180) * lat2) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        let d = R * c; // Distance in km
+        return d*1000;
     }
 }
 
