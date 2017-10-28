@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <h1 class="title">Sted4Meg</h1>
+    <div class="navbar">
+      <h1 class="title">Sted4Meg</h1>
+      <input id="visBarnehager" type="checkbox"><label for="visBarnehager">Barnehager</label>
+      <input id="visTurstier" type="checkbox"><label for="visTurstier">Turstier</label>
+    </div>
+
     <gmap-map
     id="map"
     ref="map"
@@ -11,9 +16,7 @@
     v-on:tilesloaded="drawHeatMap"
     :zoom="10"
     >
-
   </gmap-map>
-
 </div>
 </template>
 
@@ -136,18 +139,27 @@ export default {
 </script>
 
 <style>
-.title{
+.navbar{
   font-family: Verdana, Arial, sans-serif;
   position: fixed;
   width: 100%;
   z-index: 2;
+  background-color: #226699;
+  height: 50px;
   top: 0;
   padding: 0 20px;
-  line-height: 50px;
-  background-color: #226699;
   color: #FFF;
+}
+.title, label, input{
+  line-height: 50px;
   margin: 0;
-  height: 50px;
+  display: inline-block;
+}
+.title{
+  margin-right: 20px;
+}
+label{
+  font-size: 20px;
 }
 #map{
   width: 100%;
