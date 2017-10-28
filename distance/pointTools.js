@@ -21,10 +21,9 @@ let distances = [
  */
 function setPointScore(poiArray, point) {
     let score = 0;
-    console.log(poiArray.length);
 
     for (let i = 0; i < poiArray.length; i++) {
-        if (poiArray[i] <= distances[0])
+        if (poiArray[i].distance <= distances[0])
             score += 10;
         else if (poiArray[i].distance <= distances[1])
             score += 9;

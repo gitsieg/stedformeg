@@ -23,23 +23,36 @@
     <script type="text/javascript" src="pointTools.js"></script>
     <script type="text/javascript">
 
-        // Coordinates to the point to be assessed/evaluated
-        let startLat = 58.943810;
-        let startLon = 5.743316;
 
-        console.log(startLat + "         "  + startLon);
+        let coordinates = [
+            [58.977406, 5],         // North sea
+            [58.991169, 5.668026],
+            [58.991050, 5.669940],
+            [58.993449, 5],         // North sea
+            [58.991990, 5.673689],
+            [58.991169, 5.668026],
+            [58.993067, 5.676586],
+            [58.991169, 5.668026],
+            [58.988820, 5.679166]
+        ];
+
 
         // Instance of a point of interest
-        let pointToAssess = new PointOfInterest(startLat, startLon, Number.MAX_SAFE_INTEGER);
         let datahandler = new DataHandler();
         let categories = datahandler.categories;
 
-        // Process coordinate data
-        let barnehagePoints = processCoordinates(categories["barnehage"], pointToAssess);
-        let turstiPoints = processCoordinates(categories["tursti"], pointToAssess);
 
-        console.log(barnehagePoints);
-        console.log(turstiPoints);
+        // List of points from grid
+        let evaluationPoints = [];
+        // List of barnehager
+        let barnehager = [];
+        for (let i = 0; i < coordinates.length; i++) {
+            let thePoint = new PointOfInterest(coordinates[i][0], coordinates[i][1], -1);   // the point to be evaluated
+            barnehager = processCoordinates(categories["barnehage"], thePoint); // Set distances from barnehage to point
+            evaluationPoints.push(setPointScore(barnehager, thePoint)); // Put the processed point
+        }
+
+        console.log(JSON.stringify(evaluationPoints));
 
     </script>
 </main>

@@ -20,7 +20,7 @@ class PointOfInterest {
 
     static measure(lat1,lon1,lat2,lon2) {
         let R = 6371; // Radius of the earth in km
-        let dLat = (Math.PI/180) * (lat2-lat1);  // deg2rad below
+        let dLat = (Math.PI/180) * (lat2-lat1);
         let dLon = (Math.PI/180) * (lon2-lon1);
         let a =
             Math.sin(dLat/2) * Math.sin(dLat/2) +
